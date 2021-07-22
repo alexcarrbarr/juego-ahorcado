@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego: El Ahorcado</title>
+</head>
+<body>
+    <script>
+        // Crea un arreglo de palabras.
+        var listaPalabras = [
+            "PERCHA",
+            "RUIDO",
+            "ROMA",
+            "DINAMITA",
+            "SABOR",
+            "PROBLEMA",
+            "SAUNA",
+            "GUSANO",
+            "ZORRO",
+            "ZORRA",
+            "AFLIGIRSE",
+            "NATURALEZA",
+            "BOSQUE",
+            "CANTO",
+            "INTERNET",
+            "SILLA",
+            "PROFESOR",
+            "PROFESORA"
+        ]
+
+        // Elige una palabra al azar.
+        var indicePalabraIncognita = Math.floor(Math.random() * listaPalabras.length)
+        var palabraIncognita = listaPalabras[indicePalabraIncognita].toUpperCase()
+
+        var numeroLetrasPendientes = palabraIncognita.length
+        
+        // Configura el arreglo respuesta.
+        var letrasIncognitas = []
+        for (var îndiceArreglo = 0; îndiceArreglo < numeroLetrasPendientes; îndiceArreglo++) {
+            letrasIncognitas[îndiceArreglo] = "_"
+        }
+
+        // Mostrar la cantidad de letras de la respuesta.
+        alert(letrasIncognitas.join(" ") + "  \(" + numeroLetrasPendientes + ((numeroLetrasPendientes == 1)? " letra" : " letras") + "\)")
+
+        // El ciclo del juego.
+        var adivinaLetra = false
+        while (numeroLetrasPendientes > 0) {
+            // EL jugador ingresa una letra para adivinar.
+            var letraIngresada = prompt("Adivina una letra o presiona Cancelar para salir del juego.")
+            letraIngresada = letraIngresada.toUpperCase()
+
+            if (letraIngresada === null) {
+                // Sale del ciclo y del juego.
+                break
+            } else if (letraIngresada.length !== 1) {
+                // Si el jugador ingresa más de 1 letra, se le avisa que es un error.
+                alert("Por favor, ingresa una sola letra.")
+            } else {
+                // Actualizar el estado del juego con el ingreso de la letra del jugador.
+                adivinaLetra = false
+                for (var indicePalabra = 0; indicePalabra < palabraIncognita.length; indicePalabra++) {
+                    if (palabraIncognita[indicePalabra] === letraIngresada) {
+                        letrasIncognitas[indicePalabra] = letraIngresada
+                        numeroLetrasPendientes--
+                        adivinaLetra = true
+                    }
+                }
+            }
+
+            // Mostrar el progreso del juego.
+            alert((adivinaLetra ? "OK!" : "NO!") + "\n" + letrasIncognitas.join(" ") + "  \(" + numeroLetrasPendientes + ((numeroLetrasPendientes == 1)? " letra pendiente" : " letras pendientes") + "\)")
+
+            // Fin del ciclo y del juego.
+        }
+
+        // Muestra la respuesta y felicita al jugador.
+        alert("La respuesta fue: " + palabraIncognita + ". FELICITACIONES!!!")
+    </script>
+    <h1>Juego El Ahorcado</h1>
+    <div>
+        <h2>Opciones del Juego</h2>
+        <input type="text">
+    </div>
+</body>
+</html>
