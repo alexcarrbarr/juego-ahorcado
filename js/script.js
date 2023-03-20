@@ -49,7 +49,7 @@ while (numeroLetrasPendientes > 0) {
         alert("Por favor, ingresa algún caracter.");
     } else if (letraIngresada.length > 1) { // Más de 1 caracter
         alert("Por favor, ingresa 1 sólo caracter.");
-    } else if (!/^[a-zA-Z]+$/.test(letraIngresada)) {
+    } else if (!/^[a-zA-Z\u00f1\u00d1]+$/.test(letraIngresada)) {
         alert("Por favor, ingresa sólo letras.");
     } else {
         // Actualizar el estado del juego con el ingreso de la letra del jugador.
@@ -60,7 +60,6 @@ while (numeroLetrasPendientes > 0) {
                 letrasIncognitas[indicePalabra] = letraIngresada;
                 numeroLetrasPendientes--;
                 adivinaLetra = true;
-                break;
             }
         }
         if (numeroLetrasPendientes === 0) {
@@ -76,5 +75,5 @@ while (numeroLetrasPendientes > 0) {
 
 // Mostrar respuesta final al usuario, en caso de adivinar todas las letras.
 if (adivinaPalabra) {
-    alert("La respuesta fue: " + palabraIncognita + ". FELICITACIONES!!!");
+    alert("La respuesta es: " + palabraIncognita + ". FELICITACIONES!!!");
 }
