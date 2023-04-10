@@ -19,25 +19,37 @@ var listaPalabras = [ // Lista de palabras
     "PROFESOR",
     "PROFESORA"
 ];
-var indicePalabraIncognita = Math.floor(Math.random() * listaPalabras.length);
-var palabraIncognita = listaPalabras[indicePalabraIncognita].toUpperCase();
-var largoPalabraIncognita = palabraIncognita.length;
+var indicePalabraIncognita = 0;
+var palabraIncognita = "";
+var largoPalabraIncognita = 0;
+var arregloPalabraIncognita = [];
 var letrasIncognitas = [];
 var adivinaLetra = false;
+var letraYaIngresada = false;
 var adivinaPalabra = false;
 var numeroLetrasPendientes = 0;
 
+// Generar palabra aleatoria.
+indicePalabraIncognita = Math.floor(Math.random() * listaPalabras.length);
+palabraIncognita = listaPalabras[indicePalabraIncognita].toUpperCase();
+largoPalabraIncognita = palabraIncognita.length;
+
 // Configura el arreglo respuesta.
-for (var îndiceArreglo = 0; îndiceArreglo < largoPalabraIncognita; îndiceArreglo++) {
-    letrasIncognitas[îndiceArreglo] = "_";
+for (let indiceArreglo = 0; indiceArreglo < largoPalabraIncognita; indiceArreglo++) {
+    let letra = {
+        caracter: palabraIncognita.charAt(indiceArreglo),
+        posicion: indiceArreglo,
+        encontrado: false
+    };
+    arregloPalabraIncognita.push(letra);
+    letrasIncognitas.push("_");
 }
 
 // Mostrar la cantidad de letras de la respuesta.
-alert("Palabra a adivinar:\n"
-    + letrasIncognitas.join(" ") + "  \(" + largoPalabraIncognita
-    + ((largoPalabraIncognita == 1)? " letra" : " letras") + "\)");
+alert("Palabra a adivinar:\n" + letrasIncognitas.join(" ") + "  \("
+    + largoPalabraIncognita + ((largoPalabraIncognita == 1)? " letra" : " letras") + "\)");
 
-/* El ciclo del juego. */
+/* Ciclo del juego. */
 numeroLetrasPendientes = largoPalabraIncognita;
 while (numeroLetrasPendientes > 0) {
     // EL jugador ingresa una letra para adivinar.
@@ -55,11 +67,18 @@ while (numeroLetrasPendientes > 0) {
         // Actualizar el estado del juego con el ingreso de la letra del jugador.
         letraIngresada = letraIngresada.toUpperCase();
         adivinaLetra = false;
+        letraYaIngresada = false;
         for (var indicePalabra = 0; indicePalabra < largoPalabraIncognita; indicePalabra++) {
-            if (palabraIncognita[indicePalabra] === letraIngresada) {
-                letrasIncognitas[indicePalabra] = letraIngresada;
-                numeroLetrasPendientes--;
-                adivinaLetra = true;
+            if (arregloPalabraIncognita[indicePalabra].caracter === letraIngresada) {
+                if (arregloPalabraIncognita[indicePalabra].encontrado) {
+                    letraYaIngresada = true;
+                    break;
+                } else {
+                    arregloPalabraIncognita[indicePalabra].encontrado = true;
+                    letrasIncognitas[indicePalabra] = letraIngresada;
+                    numeroLetrasPendientes--;
+                    adivinaLetra = true;
+                }
             }
         }
         if (numeroLetrasPendientes === 0) {
@@ -67,7 +86,7 @@ while (numeroLetrasPendientes > 0) {
             break;
         }
         // Mostrar el progreso del juego.
-        alert((adivinaLetra ? "OK!" : "NO!") + "\n"
+        alert((letraYaIngresada ? "Esta letra ya se ingresó anteriormente" : (adivinaLetra ? "OK!" : "NO!")) + "\n"
             + letrasIncognitas.join(" ") + "  \(" + numeroLetrasPendientes
             + ((numeroLetrasPendientes == 1)? " letra pendiente" : " letras pendientes") + "\)");
     }
