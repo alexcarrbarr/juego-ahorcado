@@ -38,7 +38,6 @@ largoPalabraIncognita = palabraIncognita.length;
 for (let indiceArreglo = 0; indiceArreglo < largoPalabraIncognita; indiceArreglo++) {
     let letra = {
         caracter: palabraIncognita.charAt(indiceArreglo),
-        posicion: indiceArreglo,
         encontrado: false
     };
     arregloPalabraIncognita.push(letra);
